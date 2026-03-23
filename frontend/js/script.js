@@ -130,7 +130,7 @@ document.getElementById('contactForm').addEventListener('submit', async function
 
   try {
     // Use localhost for local testing. Before deploying, change back to: 'https://jatin-portfolio-api-o5qb.onrender.com/'
-    const response = await fetch('http://localhost:5000/', {
+    const response = await fetch('https://jatin-portfolio-api-o5qb.onrender.com', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
