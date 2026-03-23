@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Jatin Dhiman - Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link rel="shortcut icon" href="../frontend/assets/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="../frontend/css/style.css">
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<div id="loader">
+  <div id="loader-text">JATIN</div>
+  <div id="loader-bar"></div>
+</div>
+
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-box">JD</div>JATIN
+  </div>
+  
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><span class="nav-sep">/</span></li>
+    <li><a href="#works">Work</a></li>
+    <li><span class="nav-sep">/</span></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><span class="nav-sep">/</span></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+
+  <div class="nav-right" style="display: flex; align-items: center; gap: 20px;">
+    <a href="#contact" style="text-decoration:none;" class="desktop-btn"><button class="btn-hire hover-target"><span>Hire Me</span></button></a>
+    
+    <div class="hamburger hover-target" id="hamburgerBtn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  
+  <div class="close-menu hover-target" id="closeMenuBtn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </div>
+
+  <ul class="mobile-menu-links">
+    <li><a href="#home" class="mobile-link hover-target">Home</a></li>
+    <li><a href="#about" class="mobile-link hover-target">About</a></li>
+    <li><a href="#services" class="mobile-link hover-target">Services</a></li>
+    <li><a href="#works" class="mobile-link hover-target">Works</a></li>
+    <li><a href="#experience" class="mobile-link hover-target">Experience</a></li>
+    <li><a href="#contact" class="mobile-link hover-target">Contact</a></li>
+  </ul>
+</div>
+
+<section class="hero" id="home">
+  <div class="hero-bg-circle"></div>
+  <div class="hero-inner">
+    <p class="hero-tag">B.Tech CSE Student<br>&amp; Web Developer</p>
+    <div class="hero-name-wrap hover-target">
+      <div class="hero-name">
+        <span>JATIN&nbsp;</span><span>DHIMAN</span>
+      </div>
+      <div class="hero-photo-wrap">
+        <img src="../frontend/assets/myimg.png" alt="Jatin Dhiman">
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">Scroll down<div class="scroll-arrow"></div></div>
+</section>
+
+<section class="about" id="about">
+  <div class="about-big">ABOUT</div>
+  <div class="about-inner">
+    <div class="about-arrow reveal">↗</div>
+    <div class="about-text">
+      <h2 class="reveal">CSE Student<br>&amp; Developer</h2>
+      <p class="reveal reveal-delay-1">
+        I am a B.Tech CSE student passionate about Web Development, C++ programming, and Cybersecurity. I love building impactful digital solutions, participating in hackathons, and sharing tech insights through my YouTube content.
+      </p>
+      <a href="#services" style="text-decoration:none;"><span class="about-tag hover-target reveal reveal-delay-2">What I Do ↓</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="section-padding bg-dark" id="services">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-label reveal">What I Do</span></div>
+    <div class="section-title reveal">MY SERVICES</div>
+    <div class="services-grid">
+      
+      <div class="service-item reveal hover-target">
+        <span class="service-num">01</span>
+        <h3>Full-Stack Web Development</h3>
+        <p>Building highly scalable, responsive, and secure web applications from scratch using the MERN stack (MongoDB, Express, React, Node.js) and Tailwind CSS.</p>
+      </div>
+      
+      <div class="service-item reveal reveal-delay-1 hover-target">
+        <span class="service-num">02</span>
+        <h3>Software & Algorithm Design</h3>
+        <p>Developing high-performance software and logic-driven applications in C/C++, focusing on robust data structures and efficient object-oriented programming.</p>
+      </div>
+      
+      <div class="service-item reveal reveal-delay-2 hover-target">
+        <span class="service-num">03</span>
+        <h3>UI/UX & Graphic Design</h3>
+        <p>Designing intuitive user interfaces and creative digital assets. Transforming complex problem statements into visually engaging and user-friendly digital experiences.</p>
+      </div>
+
+  
+    </div>
+  </div>
+</section>
+
+<section class="section-padding bg-white" id="works">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-label reveal">Selected Works</span></div>
+    <div class="section-title reveal">PROJECTS</div>
+    <div class="work-item reveal hover-target">
+      <span class="work-name">Portfolio</span>
+      <span class="work-type">Website</span>
+    </div>
+    <div class="work-item reveal hover-target">
+      <span class="work-name">DDS</span>
+      <span class="work-type">Digital Defense Squad - Website</span>
+    </div>
+    <div class="work-item reveal reveal-delay-1 hover-target">
+      <span class="work-name">FoodLink</span>
+      <span class="work-type">Web App</span>
+    </div>
+    <div class="work-item reveal reveal-delay-3 hover-target">
+      <span class="work-name">Bug2build</span>
+      <span class="work-type">Website collaborator</span>
+    </div>
+  </div>
+</section>
+
+<section class="section-padding bg-dark" id="process">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-label reveal">How I Work</span></div>
+    <div class="section-title reveal">MY PROCESS</div>
+    
+    <div class="process-grid">
+      <div class="process-step reveal hover-target">
+        <span class="process-num">01</span>
+        <h3>Ideation</h3>
+        <p>Understanding the problem statement, brainstorming logical approaches, and planning the project architecture.</p>
+      </div>
+      <div class="process-step reveal reveal-delay-1 hover-target">
+        <span class="process-num">02</span>
+        <h3>Design</h3>
+        <p>Structuring the user interface with HTML/CSS and planning the core C++ algorithms for optimal performance.</p>
+      </div>
+      <div class="process-step reveal reveal-delay-2 hover-target">
+        <span class="process-num">03</span>
+        <h3>Development</h3>
+        <p>Writing clean, efficient code and integrating front-end systems with logical back-end structures.</p>
+      </div>
+      <div class="process-step reveal reveal-delay-3 hover-target">
+        <span class="process-num">04</span>
+        <h3>Testing</h3>
+        <p>Hunting for bugs, securing vulnerabilities, and ensuring the final product works flawlessly before launch.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-padding bg-gray" id="experience">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-label reveal">Involvement</span></div>
+    <div class="section-title reveal">EXPERIENCE</div>
+    <div class="exp-list">
+      <div class="exp-item reveal hover-target">
+        <span class="exp-year">2026 - Pres.</span>
+        <span class="exp-role">Hackathon Participant</span>
+        <span class="exp-company">Quantum Coders (Devfolio)</span>
+      </div>
+      <div class="exp-item reveal reveal-delay-1 hover-target">
+        <span class="exp-year">2026 - Pres.</span>
+        <span class="exp-role">Technical Associate</span>
+        <span class="exp-company">Digital Defense Squad (DDS)</span>
+      </div>
+      <div class="exp-item reveal reveal-delay-1 hover-target">
+        <span class="exp-year">2026 - Pres.</span>
+        <span class="exp-role">Management Member</span>
+        <span class="exp-company">GeeksforGeeks - Campus body</span>
+      </div>
+      <div class="exp-item reveal reveal-delay-2 hover-target">
+        <span class="exp-year">2025 - Pres.</span>
+        <span class="exp-role">Technical Member</span>
+        <span class="exp-company">Bug2Build</span>
+      </div>
+      <div class="exp-item reveal reveal-delay-2 hover-target">
+        <span class="exp-year">2025 - Pres.</span>
+        <span class="exp-role">Co-ordinator</span>
+        <span class="exp-company">Wiztron - Tech/Iot Club</span>
+      </div>
+      <div class="exp-item reveal reveal-delay-2 hover-target">
+        <span class="exp-year">2024 - Pres.</span>
+        <span class="exp-role">Member</span>
+        <span class="exp-company">BIS - Bureau of Indian Standard</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-padding bg-white" id="testimonials">
+  <div class="section-inner testimonial-wrap">
+    <div class="quote-mark reveal">"</div>
+    <p class="testimonial-text reveal reveal-delay-1">
+      Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work. And the only way to do great work is to love what you do.
+    </p>
+    <p class="testimonial-author reveal reveal-delay-2">Steve Jobs <span>Co-founder, Apple Inc.</span></p>
+  </div>
+</section>
+
+<section class="section-padding bg-dark" id="contact">
+  <div class="section-inner contact-grid">
+    <div class="contact-info">
+      <h2 class="reveal">LET'S<br>BUILD.</h2>
+      <p class="reveal reveal-delay-1">Got a web project in mind or need a strong partner for your next hackathon? Drop your details below and let's turn it into reality.</p>
+    </div>
+    
+    <form id="contactForm" class="contact-form reveal reveal-delay-2">
+      <div class="form-group">
+        <input type="text" id="name" name="name" required>
+        <label for="name">Your Name</label>
+      </div>
+      <div class="form-group">
+        <input type="email" id="email" name="email" required>
+        <label for="email">Email Address</label>
+      </div>
+      <div class="form-group">
+        <textarea id="message" name="message" required></textarea>
+        <label for="message">What are we building?</label>
+      </div>
+      
+      <button type="submit" id="submitBtn" class="btn-submit hover-target">Send Message</button>
+      
+      <p id="formStatus" style="margin-top: 15px; font-weight: bold;"></p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-cta reveal">LET'S<br><span>CODE</span><br>TOGETHER</div>
+    <a href="mailto:jsdhiman109@gmai.com" class="footer-email reveal hover-target">jsdhiman109@gmail.com</a>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Jatin Dhiman</span>
+    <span>All rights reserved</span>
+  </div>
+</footer>
+<script src="../frontend/js/script.js"></script>
+</body>
+</html>
