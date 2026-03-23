@@ -28,7 +28,7 @@ transporter.verify((error, success) => {
   }
 });
 
-app.post('/api/contact', async (req, res) => {
+app.post('/', async (req, res) => {
   const { name, email, message } = req.body;
 
   if (!name || !email || !message) {
