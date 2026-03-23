@@ -129,8 +129,8 @@ document.getElementById('contactForm').addEventListener('submit', async function
     statusText.innerText = '';
 
     try {
-        // Use localhost for local testing. Before deploying, change back to: 'https://jatin-portfolio-api-o5qb.onrender.com/'
-        const response = await fetch("https://jatin-portfolio-api-o5qb.onrender.com", {
+
+        const response = await fetch("https://jatin-portfolio-c0yy.onrender.com", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
