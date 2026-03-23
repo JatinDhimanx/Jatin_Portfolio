@@ -1,19 +1,20 @@
-const express = require('express');
-const nodemailer = require('nodemailer');
-const cors = require('cors');
-require('dotenv').config();
-
+const express = require("express");
+const nodemailer = require("nodemailer");
+const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
-
 app.use(express.json());
 
+/* ================= EMAIL CONFIG ================= */
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -22,39 +23,58 @@ const transporter = nodemailer.createTransport({
 
 transporter.verify((error, success) => {
   if (error) {
-    console.error('Email transporter error:', error);
+    console.log("Transport error:", error);
   } else {
-    console.log('Server is ready to send emails.');
+    console.log("Mail server ready");
   }
 });
 
-app.post('/', async (req, res) => {
+/* ================= ROUTE ================= */
+
+app.post("/send", async (req, res) => {
   const { name, email, message } = req.body;
 
   if (!name || !email || !message) {
-    return res.status(400).json({ success: false, message: 'Please fill all fields.' });
+    return res.status(400).json({
+      success: false,
+      message: "Fill all fields",
+    });
   }
 
   try {
-
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: process.env.EMAIL_USER,
-      subject: `Portfolio Contact from ${name} (${email})`,
+      subject: `Portfolio message from ${name}`,
       replyTo: email,
-      text: `You have received a new message from your portfolio contact form.\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+      text: `
+Name: ${name}
+Email: ${email}
+
+Message:
+${message}
+      `,
     };
 
     await transporter.sendMail(mailOptions);
 
-    res.status(200).json({ success: true, message: 'Message sent successfully!' });
+    res.json({
+      success: true,
+      message: "Email sent",
+    });
 
-  } catch (error) {
-    console.error('Error sending email:', error);
-    res.status(500).json({ success: false, message: 'Failed to send message.' });
+  } catch (err) {
+    console.log(err);
+
+    res.status(500).json({
+      success: false,
+      message: "Mail error",
+    });
   }
 });
 
+/* ================= PORT ================= */
+
 app.listen(PORT, () => {
-  console.log(`Server is running live on http://localhost:${PORT}`);
+  console.log("Server running on port", PORT);
 });

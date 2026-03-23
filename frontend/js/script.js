@@ -115,42 +115,42 @@ if (closeMenuBtn) {
         mobileMenu.classList.remove('active');
     });
 }
-document.getElementById('contactForm').addEventListener('submit', async function(event) {
-  event.preventDefault(); 
+document.getElementById('contactForm').addEventListener('submit', async function (event) {
+    event.preventDefault();
 
-  const submitBtn = document.getElementById('submitBtn');
-  const statusText = document.getElementById('formStatus');
+    const submitBtn = document.getElementById('submitBtn');
+    const statusText = document.getElementById('formStatus');
 
-  const name = document.getElementById('name').value;
-  const email = document.getElementById('email').value;
-  const message = document.getElementById('message').value;
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
 
-  submitBtn.innerText = 'Sending...';
-  statusText.innerText = ''; 
+    submitBtn.innerText = 'Sending...';
+    statusText.innerText = '';
 
-  try {
-    // Use localhost for local testing. Before deploying, change back to: 'https://jatin-portfolio-api-o5qb.onrender.com/'
-    const response = await fetch('https://jatin-portfolio-api-o5qb.onrender.com', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ name, email, message })
-    });
+    try {
+        // Use localhost for local testing. Before deploying, change back to: 'https://jatin-portfolio-api-o5qb.onrender.com/'
+        const response = await fetch("https://jatin-portfolio-api-o5qb.onrender.com/send", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, email, message })
+        });
 
-    if (response.ok) {
-      statusText.innerText = 'Awesome! Message sent successfully.';
-      statusText.style.color = '#ffffff'; // Tailwind's green-400
-      document.getElementById('contactForm').reset(); 
-    } else {
-      statusText.innerText = 'Oops! Failed to send. Please try again.';
-      statusText.style.color = '#ff8585'; // Tailwind's red-400
+        if (response.ok) {
+            statusText.innerText = 'Awesome! Message sent successfully.';
+            statusText.style.color = '#ffffff'; // Tailwind's green-400
+            document.getElementById('contactForm').reset();
+        } else {
+            statusText.innerText = 'Oops! Failed to send. Please try again.';
+            statusText.style.color = '#ff8585'; // Tailwind's red-400
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        statusText.innerText = 'Message failed to send. Please check your connection and try again.';
+        statusText.style.color = '#f87171';
+    } finally {
+        submitBtn.innerText = 'Send Message';
     }
-  } catch (error) {
-    console.error('Error:', error);
-    statusText.innerText = 'Message failed to send. Please check your connection and try again.';
-    statusText.style.color = '#f87171';
-  } finally {
-    submitBtn.innerText = 'Send Message';
-  }
 });
