@@ -129,7 +129,7 @@ document.getElementById('contactForm').addEventListener('submit', async function
   statusText.innerText = ''; 
 
   try {
-    const response = await fetch('http://localhost:5000/api/contact', {
+    const response = await fetch('https://jatin-portfolio-api-o5qb.onrender.com/api/contact', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
