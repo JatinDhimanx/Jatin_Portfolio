@@ -3,20 +3,23 @@ const nodemailer = require('nodemailer');
 const cors = require('cors');
 require('dotenv').config();
 
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
+
+// During development, allow all origins. 
+// For production, change this to: app.use(cors({ origin: 'https://your-portfolio-domain.com' }));
 app.use(cors());
 
 app.use(express.json());
-
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    pass: process.env.EMAIL_PASS, // Reminder: This must be a 16-character Google App Password
   },
 });
 
@@ -28,6 +31,10 @@ transporter.verify((error, success) => {
   }
 });
 
+app.get('/', (req, res) => {
+  res.render('index');
+});
+
 app.post('/', async (req, res) => {
   const { name, email, message } = req.body;
 
@@ -36,7 +43,6 @@ app.post('/', async (req, res) => {
   }
 
   try {
-
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: process.env.EMAIL_USER,
@@ -46,7 +52,6 @@ app.post('/', async (req, res) => {
     };
 
     await transporter.sendMail(mailOptions);
-
     res.status(200).json({ success: true, message: 'Message sent successfully!' });
 
   } catch (error) {
