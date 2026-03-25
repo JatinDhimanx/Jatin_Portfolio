@@ -3,20 +3,15 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const express = require("express");
-const nodemailer = require("nodemailer");
 const cors = require("cors");
 const path = require("path");
+const { Resend } = require("resend");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-// ===== DEBUG =====
-console.log("EMAIL_USER:", process.env.EMAIL_USER);
-console.log("EMAIL_PASS:", process.env.EMAIL_PASS ? "OK" : "MISSING");
-
-
-// ===== VIEW ENGINE =====
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
@@ -26,33 +21,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-// ===== SMTP TRANSPORTER (BEST FOR RENDER) =====
-
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-  connectionTimeout: 5000,
-});
-
-
-// ===== VERIFY =====
-
-transporter.verify((err, success) => {
-  if (err) {
-    console.log("MAIL ERROR:", err);
-  } else {
-    console.log("MAIL READY");
-  }
-});
-
-
-// ===== ROUTES =====
-
 app.get("/", (req, res) => {
   res.render("index");
 });
@@ -61,20 +29,11 @@ app.get("/", (req, res) => {
 app.post("/", async (req, res) => {
   const { name, email, message } = req.body;
 
-  if (!name || !email || !message) {
-    return res.json({
-      success: false,
-      message: "All fields required",
-    });
-  }
-
   try {
-
-    const mailOptions = {
-      from: `"Portfolio Form" <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_USER,
-      replyTo: email,
-      subject: `New Message from ${name}`,
+    await resend.emails.send({
+      from: "Portfolio <onboarding@resend.dev>",
+      to: "forworkm9@gmail.com",
+      subject: "New Portfolio Message",
       text: `
 Name: ${name}
 Email: ${email}
@@ -82,29 +41,17 @@ Email: ${email}
 Message:
 ${message}
 `,
-    };
-
-    await transporter.sendMail(mailOptions);
-
-    res.json({
-      success: true,
-      message: "Awesome! Message sent successfully.",
     });
 
-  } catch (error) {
+    res.json({ success: true });
 
-    console.log("SEND ERROR:", error);
-
-    res.json({
-      success: false,
-      message: "Oops! Failed to send.",
-    });
+  } catch (err) {
+    console.log(err);
+    res.json({ success: false });
   }
 });
 
 
-// ===== START =====
-
 app.listen(PORT, () => {
-  console.log("Server running on port", PORT);
+  console.log("Server running on", PORT);
 });
