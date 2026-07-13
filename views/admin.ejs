@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - Portfolio</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #f4f4f5; color: #18181b; padding: 2rem; margin: 0; }
+    .container { max-width: 800px; margin: 0 auto; background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+    h1, h2 { border-bottom: 1px solid #e4e4e7; padding-bottom: 0.5rem; margin-bottom: 1rem; }
+    .section { margin-bottom: 2rem; border: 1px solid #e4e4e7; padding: 1rem; border-radius: 8px; background: #fafafa; }
+    .form-group { margin-bottom: 1rem; }
+    label { display: block; font-weight: 500; margin-bottom: 0.25rem; }
+    input, textarea { width: 100%; padding: 0.5rem; border: 1px solid #d4d4d8; border-radius: 4px; box-sizing: border-box; font-family: inherit; }
+    button { background: #18181b; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; }
+    button:hover { background: #27272a; }
+    .btn-danger { background: #ef4444; }
+    .btn-danger:hover { background: #dc2626; }
+    .btn-warning { background: #f59e0b; }
+    .btn-warning:hover { background: #d97706; }
+    .item-card { border: 1px dashed #d4d4d8; padding: 1rem; margin-bottom: 1rem; border-radius: 4px; position: relative; background: white; }
+    .remove-btn { position: absolute; top: 0.5rem; right: 0.5rem; }
+    .add-btn { margin-top: 0.5rem; }
+    .save-bar { position: sticky; bottom: 0; background: white; padding: 1rem; border-top: 1px solid #e4e4e7; display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; border-radius: 0 0 8px 8px; }
+    .toggle-container { display: flex; align-items: center; gap: 10px; }
+    .toggle-container input { width: auto; }
+  </style>
+</head>
+<body>
+  <div id="app" class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h1>Portfolio Admin Panel</h1>
+      <a href="/" target="_blank" style="color: #2563eb; text-decoration: none;">View Site ↗</a>
+    </div>
+
+    <!-- Admin Settings & Maintenance Mode -->
+    <div class="section" style="border-color: #f59e0b; background: #fffbeb;">
+      <h2>Site Settings</h2>
+      
+      <div class="form-group toggle-container">
+        <input type="checkbox" id="underConstruction" v-model="underConstruction" @change="toggleConstruction">
+        <label for="underConstruction" style="margin: 0; color: #b45309;">Enable "Under Construction" Mode</label>
+      </div>
+      
+      <hr style="border: 0; border-top: 1px solid #fde68a; margin: 1.5rem 0;">
+
+      <h3>Reset Credentials</h3>
+      <div class="form-group">
+        <label>New Username</label>
+        <input v-model="newUsername" type="text" placeholder="Enter new username">
+      </div>
+      <div class="form-group">
+        <label>New Password</label>
+        <input v-model="newPassword" type="password" placeholder="Enter new password">
+      </div>
+      <button class="btn-warning" @click="resetCredentials">Update Credentials</button>
+      <span v-if="credMessage" style="color: #d97706; margin-left: 10px; font-weight: bold;">{{ credMessage }}</span>
+    </div>
+    
+    <div class="section">
+      <h2>Hero Section</h2>
+      <div class="form-group">
+        <label>Tag (HTML allowed)</label>
+        <input v-model="data.hero.tag" type="text">
+      </div>
+      <div class="form-group">
+        <label>First Name</label>
+        <input v-model="data.hero.firstName" type="text">
+      </div>
+      <div class="form-group">
+        <label>Last Name</label>
+        <input v-model="data.hero.lastName" type="text">
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>About Section</h2>
+      <div class="form-group">
+        <label>Title (HTML allowed)</label>
+        <input v-model="data.about.title" type="text">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea v-model="data.about.description" rows="4"></textarea>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Services</h2>
+      <div v-for="(service, index) in data.services" :key="index" class="item-card">
+        <button class="remove-btn btn-danger" @click="data.services.splice(index, 1)">Remove</button>
+        <div class="form-group">
+          <label>Title</label>
+          <input v-model="service.title" type="text">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea v-model="service.description" rows="2"></textarea>
+        </div>
+      </div>
+      <button class="add-btn" @click="data.services.push({title: '', description: ''})">+ Add Service</button>
+    </div>
+
+    <div class="section">
+      <h2>Projects</h2>
+      <div v-for="(project, index) in data.projects" :key="index" class="item-card">
+        <button class="remove-btn btn-danger" @click="data.projects.splice(index, 1)">Remove</button>
+        <div class="form-group">
+          <label>Name</label>
+          <input v-model="project.name" type="text">
+        </div>
+        <div class="form-group">
+          <label>Type</label>
+          <input v-model="project.type" type="text">
+        </div>
+        <div class="form-group">
+          <label>URL</label>
+          <input v-model="project.url" type="text">
+        </div>
+      </div>
+      <button class="add-btn" @click="data.projects.push({name: '', type: '', url: ''})">+ Add Project</button>
+    </div>
+
+    <div class="section">
+      <h2>Experience</h2>
+      <div v-for="(exp, index) in data.experience" :key="index" class="item-card">
+        <button class="remove-btn btn-danger" @click="data.experience.splice(index, 1)">Remove</button>
+        <div class="form-group">
+          <label>Year</label>
+          <input v-model="exp.year" type="text">
+        </div>
+        <div class="form-group">
+          <label>Role</label>
+          <input v-model="exp.role" type="text">
+        </div>
+        <div class="form-group">
+          <label>Company</label>
+          <input v-model="exp.company" type="text">
+        </div>
+      </div>
+      <button class="add-btn" @click="data.experience.push({year: '', role: '', company: ''})">+ Add Experience</button>
+    </div>
+
+    <div class="section">
+      <h2>Contact (Footer)</h2>
+      <div class="form-group">
+        <label>Email</label>
+        <input v-model="data.contact.email" type="email">
+      </div>
+    </div>
+
+    <div class="save-bar">
+      <span v-if="statusMessage" style="color: green; font-weight: bold;">{{ statusMessage }}</span>
+      <span v-else></span>
+      <button @click="saveData" style="font-size: 1.1rem; padding: 0.75rem 2rem;">Save Content Changes</button>
+    </div>
+  </div>
+
+  <script type="application/json" id="portfolio-data">
+    <%- JSON.stringify(portfolioData) %>
+  </script>
+  <script>
+    const initialData = JSON.parse(document.getElementById('portfolio-data').textContent);
+    const initialUnderConstruction = <%= underConstruction %>;
+
+    const { createApp, ref } = Vue;
+
+    createApp({
+      setup() {
+        const data = ref(initialData);
+        const underConstruction = ref(initialUnderConstruction);
+        
+        const newUsername = ref("");
+        const newPassword = ref("");
+        
+        const statusMessage = ref("");
+        const credMessage = ref("");
+
+        const saveData = async () => {
+          statusMessage.value = "Saving...";
+          try {
+            const res = await fetch("/admin/update", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              credentials: "same-origin",
+              body: JSON.stringify(data.value)
+            });
+            if (res.ok) {
+              statusMessage.value = "Saved successfully!";
+              setTimeout(() => { statusMessage.value = ""; }, 3000);
+            } else {
+              statusMessage.value = "Error saving data.";
+            }
+          } catch (err) {
+            statusMessage.value = "Error saving data.";
+          }
+        };
+
+        const toggleConstruction = async () => {
+          try {
+            await fetch("/admin/toggle-construction", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              credentials: "same-origin",
+              body: JSON.stringify({ under_construction: underConstruction.value })
+            });
+          } catch (err) {
+            console.error(err);
+          }
+        };
+
+        const resetCredentials = async () => {
+          if (!newUsername.value || !newPassword.value) {
+            credMessage.value = "Both fields required!";
+            setTimeout(() => { credMessage.value = ""; }, 3000);
+            return;
+          }
+          
+          credMessage.value = "Updating...";
+          try {
+            const res = await fetch("/admin/reset-credentials", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              credentials: "same-origin",
+              body: JSON.stringify({ username: newUsername.value, password: newPassword.value })
+            });
+            
+            if (res.ok) {
+              credMessage.value = "Credentials Updated! Next time you login, use the new credentials.";
+              newUsername.value = "";
+              newPassword.value = "";
+            } else {
+              credMessage.value = "Failed to update.";
+            }
+          } catch (err) {
+            credMessage.value = "Failed to update.";
+          }
+          setTimeout(() => { credMessage.value = ""; }, 5000);
+        };
+
+        return {
+          data,
+          statusMessage,
+          saveData,
+          underConstruction,
+          toggleConstruction,
+          newUsername,
+          newPassword,
+          resetCredentials,
+          credMessage
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+</html>

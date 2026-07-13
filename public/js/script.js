@@ -25,16 +25,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Unified hover logic for interactive elements
         const interactiveSelectors = 'a, button, input, textarea, .hover-target';
+        const curText = document.getElementById('cursor-text');
+
         document.querySelectorAll(interactiveSelectors).forEach(el => {
             el.addEventListener('mouseenter', () => {
-                cur.style.width = '20px'; cur.style.height = '20px';
-                ring.style.width = '54px'; ring.style.height = '54px';
-                ring.style.opacity = '0.5';
+                if (el.classList.contains('project-card')) {
+                    cur.style.width = '80px'; cur.style.height = '80px';
+                    ring.style.width = '0px'; ring.style.height = '0px';
+                    ring.style.opacity = '0';
+                    if (curText) {
+                        curText.textContent = 'View →';
+                        curText.style.opacity = '1';
+                    }
+                } else {
+                    cur.style.width = '20px'; cur.style.height = '20px';
+                    ring.style.width = '54px'; ring.style.height = '54px';
+                    ring.style.opacity = '0.5';
+                }
             });
             el.addEventListener('mouseleave', () => {
                 cur.style.width = '10px'; cur.style.height = '10px';
                 ring.style.width = '36px'; ring.style.height = '36px';
                 ring.style.opacity = '1';
+                if (curText) {
+                    curText.style.opacity = '0';
+                }
+            });
+        });
+
+        // Project Card Click Navigation
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const url = card.getAttribute('data-project-url');
+                if (url) {
+                    window.open(url, '_blank');
+                }
             });
         });
     }
@@ -134,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (statusText) {
                     if (response.ok) {
-                        statusText.innerText = 'Awesome! Message sent successfully.';
+                        statusText.innerText = 'Awesome! A verification link has been sent to your email. Please click it to send your message.';
                         statusText.style.color = '#4ade80'; 
                         contactForm.reset();
                     } else {
@@ -152,6 +177,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (submitBtn) submitBtn.innerText = 'Send Message';
             }
         });
+    }
+
+    // ── Supabase Magic Link Verification ──
+    const hash = window.location.hash;
+    if (hash && hash.includes("access_token=")) {
+        const params = new URLSearchParams(hash.substring(1));
+        const accessToken = params.get("access_token");
+        
+        if (accessToken) {
+            // Clean URL
+            history.replaceState(null, null, ' ');
+            
+            // Send token to backend
+            fetch("/confirm-message", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ access_token: accessToken })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Thank you! Your email is verified and your message has been sent to Jatin.");
+                } else {
+                    alert("Link expired or invalid. Please try sending your message again.");
+                }
+            })
+            .catch(err => console.error("Verification error:", err));
+        }
     }
 });
 
