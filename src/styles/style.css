@@ -72,13 +72,6 @@ body:hover #cursor {
   opacity: 1;
 }
 
-a:hover~#cursor,
-button:hover~#cursor,
-.hover-target:hover~#cursor {
-  width: 20px;
-  height: 20px;
-}
-
 body:active #cursor {
   transform: translate(-50%, -50%) scale(0.6);
 }
