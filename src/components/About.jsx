@@ -11,6 +11,7 @@ export default function About({ aboutData }) {
       <div className="about-inner">
         <div className="about-arrow reveal">↗</div>
         <div className="about-text">
+          <span className="section-label reveal" style={{ color: '#888', marginBottom: '14px', display: 'inline-block', letterSpacing: '0.14em' }}>About Me</span>
           <h2
             className="reveal"
             id="about-title"

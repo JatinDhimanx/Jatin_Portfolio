@@ -10,10 +10,10 @@ const defaultData = {
     { title: "UI/UX & Frontend", description: "Crafting interactive, smooth, and visually appealing user interfaces." }
   ],
   projects: [
-    { name: "Portfolio Website", type: "Web App", url: "https://github.com/JatinDhimanx" }
+    { name: "Portfolio Website", type: "Web App", url: "https://github.com/JatinDhimanx", occurrence: "2024" }
   ],
   experience: [
-    { year: "2024 - PRESENT", role: "Full Stack Developer", company: "Independent / Projects" }
+    { year: "2024 - PRESENT", role: "Full Stack Developer", company: "Independent / Projects", occurrence: "Primary / Ongoing" }
   ],
   contact: { email: "forworkm9@gmail.com" }
 };

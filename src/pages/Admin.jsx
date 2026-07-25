@@ -10,10 +10,10 @@ const defaultData = {
     { title: "C++ & Algorithms", description: "Writing efficient, high-performance logic and data structures." }
   ],
   projects: [
-    { name: "Portfolio Website", type: "Web App", url: "https://github.com/JatinDhimanx" }
+    { name: "Portfolio Website", type: "Web App", url: "https://github.com/JatinDhimanx", occurrence: "2024" }
   ],
   experience: [
-    { year: "2024 - PRESENT", role: "Full Stack Developer", company: "Independent / Projects" }
+    { year: "2024 - PRESENT", role: "Full Stack Developer", company: "Independent / Projects", occurrence: "Primary / Ongoing" }
   ],
   contact: { email: "forworkm9@gmail.com" }
 };
@@ -411,7 +411,7 @@ export default function Admin() {
               <div className="admin-cardHeader">
                 <h2 className="admin-cardTitle">PROJECTS ({data.projects?.length || 0})</h2>
                 <button
-                  onClick={() => setData({ ...data, projects: [...(data.projects || []), { name: '', type: '', url: '' }] })}
+                  onClick={() => setData({ ...data, projects: [...(data.projects || []), { name: '', type: '', url: '', occurrence: '' }] })}
                   className="admin-btnBlackSmall"
                 >
                   + ADD PROJECT
@@ -419,22 +419,54 @@ export default function Admin() {
               </div>
               {(data.projects || []).map((project, index) => (
                 <div key={index} className="admin-itemCard">
-                  <button
-                    onClick={() => {
-                      const next = [...data.projects];
-                      next.splice(index, 1);
-                      setData({ ...data, projects: next });
-                    }}
-                    className="admin-btnDelete"
-                  >
-                    REMOVE
-                  </button>
-                  <div className="admin-grid-2">
+                  <div style={{ display: 'flex', gap: '8px', float: 'right', marginBottom: '12px' }}>
+                    {index > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const next = [...data.projects];
+                          const temp = next[index];
+                          next[index] = next[index - 1];
+                          next[index - 1] = temp;
+                          setData({ ...data, projects: next });
+                        }}
+                        className="admin-btnMove"
+                      >
+                        ↑ UP
+                      </button>
+                    )}
+                    {index < (data.projects || []).length - 1 && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const next = [...data.projects];
+                          const temp = next[index];
+                          next[index] = next[index + 1];
+                          next[index + 1] = temp;
+                          setData({ ...data, projects: next });
+                        }}
+                        className="admin-btnMove"
+                      >
+                        ↓ DOWN
+                      </button>
+                    )}
+                    <button
+                      onClick={() => {
+                        const next = [...data.projects];
+                        next.splice(index, 1);
+                        setData({ ...data, projects: next });
+                      }}
+                      className="admin-btnDelete"
+                    >
+                      REMOVE
+                    </button>
+                  </div>
+                  <div className="admin-grid-3">
                     <div className="admin-formGroup">
                       <label className="admin-label">Project Name</label>
                       <input
                         type="text"
-                        value={project.name}
+                        value={project.name || ''}
                         onChange={(e) => {
                           const next = [...data.projects];
                           next[index].name = e.target.value;
@@ -447,7 +479,7 @@ export default function Admin() {
                       <label className="admin-label">Project Type</label>
                       <input
                         type="text"
-                        value={project.type}
+                        value={project.type || ''}
                         onChange={(e) => {
                           const next = [...data.projects];
                           next[index].type = e.target.value;
@@ -456,12 +488,26 @@ export default function Admin() {
                         className="admin-input"
                       />
                     </div>
+                    <div className="admin-formGroup">
+                      <label className="admin-label">Custom Occurrence / Tag</label>
+                      <input
+                        type="text"
+                        value={project.occurrence || ''}
+                        onChange={(e) => {
+                          const next = [...data.projects];
+                          next[index].occurrence = e.target.value;
+                          setData({ ...data, projects: next });
+                        }}
+                        placeholder="e.g. 2024 / Featured / Primary"
+                        className="admin-input"
+                      />
+                    </div>
                   </div>
                   <div className="admin-formGroup">
                     <label className="admin-label">Project URL</label>
                     <input
                       type="text"
-                      value={project.url}
+                      value={project.url || ''}
                       onChange={(e) => {
                         const next = [...data.projects];
                         next[index].url = e.target.value;
@@ -480,7 +526,7 @@ export default function Admin() {
               <div className="admin-cardHeader">
                 <h2 className="admin-cardTitle">EXPERIENCE TIMELINE ({data.experience?.length || 0})</h2>
                 <button
-                  onClick={() => setData({ ...data, experience: [...(data.experience || []), { year: '', role: '', company: '' }] })}
+                  onClick={() => setData({ ...data, experience: [...(data.experience || []), { year: '', role: '', company: '', occurrence: '' }] })}
                   className="admin-btnBlackSmall"
                 >
                   + ADD EXPERIENCE
@@ -488,22 +534,54 @@ export default function Admin() {
               </div>
               {(data.experience || []).map((exp, index) => (
                 <div key={index} className="admin-itemCard">
-                  <button
-                    onClick={() => {
-                      const next = [...data.experience];
-                      next.splice(index, 1);
-                      setData({ ...data, experience: next });
-                    }}
-                    className="admin-btnDelete"
-                  >
-                    REMOVE
-                  </button>
-                  <div className="admin-grid-3">
+                  <div style={{ display: 'flex', gap: '8px', float: 'right', marginBottom: '12px' }}>
+                    {index > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const next = [...data.experience];
+                          const temp = next[index];
+                          next[index] = next[index - 1];
+                          next[index - 1] = temp;
+                          setData({ ...data, experience: next });
+                        }}
+                        className="admin-btnMove"
+                      >
+                        ↑ UP
+                      </button>
+                    )}
+                    {index < (data.experience || []).length - 1 && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const next = [...data.experience];
+                          const temp = next[index];
+                          next[index] = next[index + 1];
+                          next[index + 1] = temp;
+                          setData({ ...data, experience: next });
+                        }}
+                        className="admin-btnMove"
+                      >
+                        ↓ DOWN
+                      </button>
+                    )}
+                    <button
+                      onClick={() => {
+                        const next = [...data.experience];
+                        next.splice(index, 1);
+                        setData({ ...data, experience: next });
+                      }}
+                      className="admin-btnDelete"
+                    >
+                      REMOVE
+                    </button>
+                  </div>
+                  <div className="admin-grid-2">
                     <div className="admin-formGroup">
                       <label className="admin-label">Year / Period</label>
                       <input
                         type="text"
-                        value={exp.year}
+                        value={exp.year || ''}
                         onChange={(e) => {
                           const next = [...data.experience];
                           next[index].year = e.target.value;
@@ -513,10 +591,26 @@ export default function Admin() {
                       />
                     </div>
                     <div className="admin-formGroup">
+                      <label className="admin-label">Custom Occurrence / Tag</label>
+                      <input
+                        type="text"
+                        value={exp.occurrence || ''}
+                        onChange={(e) => {
+                          const next = [...data.experience];
+                          next[index].occurrence = e.target.value;
+                          setData({ ...data, experience: next });
+                        }}
+                        placeholder="e.g. Full-Time / Remote / Ongoing"
+                        className="admin-input"
+                      />
+                    </div>
+                  </div>
+                  <div className="admin-grid-2">
+                    <div className="admin-formGroup">
                       <label className="admin-label">Role</label>
                       <input
                         type="text"
-                        value={exp.role}
+                        value={exp.role || ''}
                         onChange={(e) => {
                           const next = [...data.experience];
                           next[index].role = e.target.value;
@@ -529,7 +623,7 @@ export default function Admin() {
                       <label className="admin-label">Company</label>
                       <input
                         type="text"
-                        value={exp.company}
+                        value={exp.company || ''}
                         onChange={(e) => {
                           const next = [...data.experience];
                           next[index].company = e.target.value;

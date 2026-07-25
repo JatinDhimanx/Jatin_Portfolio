@@ -16,7 +16,12 @@ export default function Experience({ experienceData }) {
           {experiences.map((exp, index) => (
             <div key={index} className="exp-item reveal hover-target">
               <span className="exp-year">{exp.year}</span>
-              <span className="exp-role">{exp.role}</span>
+              <div className="exp-role-wrap">
+                <span className="exp-role">{exp.role}</span>
+                {exp.occurrence && (
+                  <span className="exp-occurrence">{exp.occurrence}</span>
+                )}
+              </div>
               <span className="exp-company">{exp.company}</span>
             </div>
           ))}

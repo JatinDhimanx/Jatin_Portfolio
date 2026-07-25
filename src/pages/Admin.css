@@ -316,8 +316,6 @@
 }
 
 .admin-btnDelete {
-  float: right;
-  margin-bottom: 12px;
   padding: 4px 10px;
   border: 1px solid #ef4444;
   background-color: transparent;
@@ -326,6 +324,29 @@
   letter-spacing: 0.08em;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-btnDelete:hover {
+  background-color: #ef4444;
+  color: #ffffff;
+}
+
+.admin-btnMove {
+  padding: 4px 10px;
+  border: 1px solid #0a0a0a;
+  background-color: transparent;
+  color: #0a0a0a;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-btnMove:hover {
+  background-color: #0a0a0a;
+  color: #f5f4f0;
 }
 
 .admin-saveBar {

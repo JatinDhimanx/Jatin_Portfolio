@@ -25,7 +25,12 @@ export default function Projects({ projectsData }) {
               className="work-item reveal hover-target project-card"
               onClick={() => handleProjectClick(project.url)}
             >
-              <span className="work-name">{project.name}</span>
+              <div className="work-title-wrap">
+                <span className="work-name">{project.name}</span>
+                {project.occurrence && (
+                  <span className="work-occurrence">{project.occurrence}</span>
+                )}
+              </div>
               <span className="work-type">{project.type}</span>
             </div>
           ))}
