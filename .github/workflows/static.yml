@@ -24,17 +24,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Inject Secrets into config.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Vite App
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL || secrets.SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY || secrets.SUPABASE_KEY }}
         run: |
-          mkdir -p deploy/js
-          cp -r css deploy/
-          cp -r assets deploy/
-          cp index.html deploy/
-          cp admin.html deploy/
-          cp js/script.js deploy/js/
-          sed -e "s|YOUR_SUPABASE_URL_PLACEHOLDER|${{ secrets.SUPABASE_URL }}|g" \
-              -e "s|YOUR_SUPABASE_KEY_PLACEHOLDER|${{ secrets.SUPABASE_KEY }}|g" \
-              js/config.template.js > deploy/js/config.js
+          npm run build
+          cp dist/index.html dist/404.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -42,7 +47,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'deploy'
+          path: 'dist'
 
       - name: Deploy to GitHub Pages
         id: deployment
